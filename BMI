@@ -1,0 +1,46 @@
+def calculate_bmi(weight, height):
+    """
+    Calculate BMI using weight in kilograms and height in meters.
+    Formula: BMI = weight / (height * height)
+    """
+    return weight / (height ** 2)
+
+def suggest_diet(bmi):
+    """
+    Suggest diet plan based on BMI category.
+    """
+    if bmi < 18.5:
+        return "You are underweight. To gain weight, focus on consuming more calories and healthy fats. Include protein-rich foods like lean meats, eggs, dairy, and legumes in your diet. Also, incorporate complex carbohydrates such as whole grains, fruits, and vegetables."
+    elif bmi < 24.9:
+        return "You are within a healthy weight range. Maintain a balanced diet consisting of a variety of foods including fruits, vegetables, lean proteins, whole grains, and healthy fats. Focus on portion control and avoid excessive consumption of processed foods and sugary snacks."
+    elif bmi < 29.9:
+        return "You are overweight. To lose weight, focus on consuming fewer calories than you burn through exercise and daily activities. Increase your intake of fruits, vegetables, and lean proteins while reducing consumption of high-calorie and high-fat foods. Incorporate regular exercise into your routine."
+    else:
+        return "You are obese. It's important to prioritize weight loss for overall health. Consult with a healthcare professional or dietitian to develop a personalized diet and exercise plan. Focus on portion control, limiting processed foods and sugary drinks, and increasing physical activity levels."
+
+def main():
+    print("Welcome to the BMI Calculator!")
+    
+    # Taking input for weight and height from the user with error handling
+    while True:
+        try:
+            weight = float(input("Enter your weight in kilograms: "))
+            height = float(input("Enter your height in meters: "))
+            break
+        except ValueError:
+            print("Please enter valid numerical values for weight and height.")
+
+    # Checking if weight or height is non-positive
+    if weight <= 0 or height <= 0:
+        print("Weight and height must be positive values.")
+        return
+
+    # Calculating BMI
+    bmi = calculate_bmi(weight, height)
+
+    # Displaying the result
+    print("Your BMI is: {:.2f}".format(bmi))
+    print(suggest_diet(bmi))
+
+if __name__== "__main__":
+    main()
