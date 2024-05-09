@@ -1,0 +1,110 @@
+import hashlib
+
+users = {}
+
+def signup():
+    newname = input("Enter your new account name: ")
+    if newname in users:
+        print("Username already exists.")
+        return
+    newpw = input("Create your password: ")
+    newpw_hash = hashlib.sha256(newpw.encode()).hexdigest()
+    users[newname] = newpw_hash
+    print("Sign up successful!")
+
+def login():
+    name = input("Your registered name: ")
+    if name not in users:
+        print("Username does not exist.")
+        return False
+    pw = input("Your password: ")
+    pw_hash = hashlib.sha256(pw.encode()).hexdigest()
+    if users[name] == pw_hash:
+        print("Login successful!")
+        return True
+    else:
+        print("Incorrect password.")
+        return False
+
+while True:
+    print("1. Sign up")
+    print("2. Log in")
+    print("3. Exit")
+    choice = int(input("Enter your choice: "))
+    if choice == 1:
+        signup()
+    elif choice == 2:
+        if login():
+            break
+    elif choice == 3:
+        exit()
+    else:
+        print("Invalid choice.")
+# Get the number of users
+num_users = int(input("Enter the number of users: "))
+
+# Get the name for the titled folder
+folder_name = input("Enter the name for the titled folder: ")
+
+# Create the titled folder
+import os
+if not os.path.exists(folder_name):
+    os.makedirs(folder_name)
+
+# Initialize a list to store the user names
+users = []
+
+# Get the name for each user
+for i in range(num_users):
+    name = input("Enter the name of user " + str(i+1) + ": ")
+
+    # Add the user to the list
+    users.append(name)
+
+# Add a file for each user in the titled folder
+for i, user in enumerate(users):
+    with open(os.path.join(folder_name, user + ".txt"), "w") as f:
+        f.write(user)
+
+# Print a message to confirm that the users have been added to the titled folder
+print("\nThe users have been added to the titled folder: " + folder_name)
+# Get the total expense
+total_expense = float(input("Enter the total expense: "))
+
+# Split the expense equally or individually
+split_equally = input("Do you want to split the expense equally? (y/n) ").lower() == 'y'
+
+if split_equally:
+    # Split expense equally
+    payment_per_person = total_expense / num_users
+    print("\nExpense split equally:")
+    for i, user in enumerate(users):
+        print(f"{user}: {payment_per_person:.2f} INR")
+else:
+    # Split expense individually
+    payment_per_person = {}
+    for user in users:
+        amount = float(input(f"Enter the amount for {user}: "))
+        payment_per_person[user] = amount
+    print("\nExpense split individually:")
+    for user, amount in payment_per_person.items():
+        print(f"{user}: {amount:.2f} INR")
+# Get the amount in INR
+amount_inr = float(input("Enter the amount in INR: "))
+
+# Get the currency to convert to
+currency = input("Enter the currency to convert to (USD, EUR, or GBP): ").upper()
+
+# Define the conversion rates
+conversion_rates = {
+    "USD": 0.013,
+    "EUR": 0.011,
+    "GBP": 0.009
+}
+
+# Convert the amount to the specified currency
+if currency in conversion_rates:
+    amount_converted = amount_inr * conversion_rates[currency]
+    print(f"{amount_inr} INR is equal to {amount_converted:.2f} {currency}.")
+else:
+    print("Invalid currency.")
